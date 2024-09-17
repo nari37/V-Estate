@@ -1,4 +1,7 @@
 
+
+
+
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import {getAuth} from 'firebase/auth'
@@ -7,7 +10,7 @@ import {getAuth} from 'firebase/auth'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDmgJe4QFrFp83-6qRr6oVnxwAJ9y3bYZI",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: "real-state-vizag.firebaseapp.com",
   projectId: "real-state-vizag",
   storageBucket: "real-state-vizag.appspot.com",
@@ -16,5 +19,4 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-   const g_app = initializeApp(firebaseConfig);
-   export const app = getAuth (g_app)
+export   const app = initializeApp(firebaseConfig);

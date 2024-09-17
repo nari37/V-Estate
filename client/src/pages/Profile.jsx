@@ -36,24 +36,20 @@ export default function Profile() {
   const [isShow,setIsshow] = useState('');
   const dispatch = useDispatch();
 
-  // firebase storage
-  // allow read;
-  // allow write: if
-  // request.resource.size < 2 * 1024 * 1024 &&
-  // request.resource.contentType.matches('image/.*')
-
   useEffect(() => {
     if (file) {
       handleFileUpload(file);
     }
   }, [file]);
 
+
   const handleFileUpload = (file) => {
     const storage = getStorage(app);
-    const fileName = new Date().getTime() + file.name;
-    const storageRef = ref(storage, fileName);
+    const fileName = new Date().getTime() + '-' + file.name;
+    const storageRef = ref(storage, `images/${fileName}`);
+    
     const uploadTask = uploadBytesResumable(storageRef, file);
-
+  
     uploadTask.on(
       'state_changed',
       (snapshot) => {
@@ -62,16 +58,21 @@ export default function Profile() {
         setFilePerc(Math.round(progress));
       },
       (error) => {
+        console.error('Error uploading file:', error);
         setFileUploadError(true);
       },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
-          setFormData({ ...formData, avatar: downloadURL })
-        );
+      async () => {
+        try {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          setFormData({ ...formData, avatar: downloadURL });
+        } catch (error) {
+          console.error('Error getting download URL:', error);
+          setFileUploadError(true);
+        }
       }
     );
   };
-
+  
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -100,22 +101,7 @@ export default function Profile() {
     }
   };
 
-  // const handleDeleteUser = async () => {
-  //   try {
-  //     dispatch(deleteUserStart());
-  //     const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-  //       method: 'DELETE',
-  //     });
-  //     const data = await res.json();
-  //     if (data.success === false) {
-  //       dispatch(deleteUserFailure(data.message));
-  //       return;
-  //     }
-  //     dispatch(deleteUserSuccess(data));
-  //   } catch (error) {
-  //     dispatch(deleteUserFailure(error.message));
-  //   }
-  // };
+
 
   const handleDeleteUser = async () => {
     // Show confirmation alert
@@ -191,24 +177,7 @@ export default function Profile() {
     }
   };
 
-  // const handleListingDelete = async (listingId) => {
-  //   try {
-  //     const res = await fetch(`/api/listing/delete/${listingId}`, {
-  //       method: 'DELETE',
-  //     });
-  //     const data = await res.json();
-  //     if (data.success === false) {
-  //       console.log(data.message);
-  //       return;
-  //     }
-
-  //     setUserListings((prev) =>
-  //       prev.filter((listing) => listing._id !== listingId)
-  //     );
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
+  
 
 
   const handleListingDelete = async (listingId) => {
