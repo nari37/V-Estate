@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> 3210968c9eb2b05cd681a477c4bc86cddfb30b29
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import {getAuth} from 'firebase/auth'
@@ -10,7 +13,7 @@ import {getAuth} from 'firebase/auth'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  apiKey: "AIzaSyDmgJe4QFrFp83-6qRr6oVnxwAJ9y3bYZI",
   authDomain: "real-state-vizag.firebaseapp.com",
   projectId: "real-state-vizag",
   storageBucket: "real-state-vizag.appspot.com",

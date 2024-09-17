@@ -24,11 +24,21 @@ mongoose
 const app = express();
 
 app.use(express.json());
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-  credentials: true, 
-}));
+// app.use(cors({
+//   origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+//   credentials: true, 
+// }));
 
+app.use(cors({
+  origin: [
+    'https://real-state-vizag.web.app',
+    'https://real-state-vizag.firebaseapp.com',
+    'http://localhost:5173', // Adjust as needed for local development
+  ],
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+}));
 
 app.use(cookieParser());
 
