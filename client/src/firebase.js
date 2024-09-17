@@ -1,10 +1,4 @@
-<<<<<<< HEAD
 
-
-
-
-=======
->>>>>>> 3210968c9eb2b05cd681a477c4bc86cddfb30b29
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import {getAuth} from 'firebase/auth'
